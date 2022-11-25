@@ -1,0 +1,16 @@
+<%-include("partials/header");-%>
+    <h1>Compose</h1><br>
+    <div class="form-group mb-3">
+        <form class="item" action="/compose" method="post">
+            <label>Title</label>
+            <input class="form-control" type="text" name="title" placeholder="Title" autocomplete="off" maxlength="80"
+                size="83">
+        <br>
+        <label>Article</label>
+        <textarea class="form-control" rows="6" cols="83" name="article"placeholder="Type your text here."></textarea>
+    </div>
+    <!-- ! bootstrap 3.3.7 is used, thats y button colour is different to 5.x version -->
+<button class="btn btn-primary" type="submit" name="button">Publish</button>
+    </form>
+
+    <%-include("partials/footer");-%>
