@@ -37,6 +37,18 @@ app.get("/compose", (req, res) => {
   res.render("compose");
 });
 
+// * the below method is taken from express routing docs in order to build dynamic website
+// * also this method is used so that we could get hold of the name after "/post/:" in oder to display according to that
+app.get("/posts/:newPost", (req, res) => {
+  for (let i = 0; i < posts.length; i++) {
+    if (req.params.newPost == posts[i].title) {
+      console.log("match found");
+    }else{
+      console.log("match not found")
+    }
+  }
+});
+
 app.post("/compose", (req, res) => {
   const publishContent = {
     title: req.body.title,

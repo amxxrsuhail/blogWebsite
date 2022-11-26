@@ -1,6 +1,11 @@
-<%-include("partials/header");-%> 
-<h1>Home</h1>
-<p><%=summary%></p>
-<!-- * the below method is an alternate way to for loop in javascript and is much shorter compared to for loop -->
-<%newPost.forEach(element=>console.log(element.title));%>
-<%-include("partials/footer");-%> 
+<%-include("partials/header");-%>
+    <h1>Home</h1>
+    <p>
+        <%=summary%>
+    </p>
+    <!-- * the below method is an alternate way to for loop in javascript and is much shorter compared to for loop -->
+    <%newPost.forEach(element=>{%>
+        <h2><%=element.title%></h2>
+        <p><%=element.article%></p>
+        <%});%>
+            <%-include("partials/footer");-%>
