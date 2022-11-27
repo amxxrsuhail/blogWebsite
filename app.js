@@ -11,6 +11,8 @@ const contactContent =
 
 const app = express();
 
+const _ = require("lodash");
+
 let posts = [];
 
 app.set("view engine", "ejs");
@@ -41,10 +43,13 @@ app.get("/compose", (req, res) => {
 // * also this method is used so that we could get hold of the name after "/post/:" in oder to display according to that
 app.get("/posts/:newPost", (req, res) => {
   for (let i = 0; i < posts.length; i++) {
-    if (req.params.newPost == posts[i].title) {
-      console.log("match found");
-    }else{
-      console.log("match not found")
+    const postHeading = _.lowerCase(posts[i].title);
+    const requestedURL = _.lowerCase(req.params.newPost);
+    if (requestedURL == postHeading) {
+      res.render("post", {
+        individualTitle: posts[i].title,
+        individualSummary: posts[i].article,
+      });
     }
   }
 });

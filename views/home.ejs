@@ -6,6 +6,9 @@
     <!-- * the below method is an alternate way to for loop in javascript and is much shorter compared to for loop -->
     <%newPost.forEach(element=>{%>
         <h2><%=element.title%></h2>
-        <p><%=element.article%></p>
+        <p>
+            <%=element.article.substring(1,100)+" ..."%>
+            <a href="/posts/<%=element.title%>">Read more</a>
+        </p>
         <%});%>
             <%-include("partials/footer");-%>
