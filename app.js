@@ -11,7 +11,7 @@ const Article = mongoose.model("Article", articleSchema);
 
 // !--------------express boilerplate----------------
 const express = require("express");
-const port = 3000;
+const port = 4000;
 
 const homeStartingContent =
   "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -23,6 +23,8 @@ const contactContent =
 const app = express();
 
 const _ = require("lodash");
+
+const ejs = require("ejs");
 
 app.set("view engine", "ejs");
 
@@ -52,21 +54,17 @@ app.get("/compose", (req, res) => {
 
 // * the below method is taken from express routing docs in order to build dynamic website
 // * also this method is used so that we could get hold of the name after "/post/:" in oder to display according to that
-app.get("/posts/:newPost", (req, res) => {
-  // Article.find((err,posts)=>{
-  //   console.log(posts);
-  // })
-  for (let i = 0; i < posts.length; i++) {
-    
-    const postHeading = _.lowerCase(posts[i].title);
-    const requestedURL = _.lowerCase(req.params.newPost);
-    if (requestedURL == postHeading) {
-      res.render("post", {
-        individualTitle: posts[i].title,
-        individualSummary: posts[i].article,
-      });
-    }
-  }
+
+
+app.get("/posts/:postId", (req, res) => {
+  const requestedPostId = req.params.postId;
+
+  Article.findOne({ articleTitle: requestedPostId }, (err, post) => {
+    res.render("post", {
+      individualTitle: post.articleTitle,
+      individualSummary: post.articleContent,
+    });
+  });
 });
 
 app.post("/compose", (req, res) => {
@@ -82,5 +80,5 @@ app.post("/compose", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("Server started on port 3000");
+  console.log("Server started on port 4000");
 });

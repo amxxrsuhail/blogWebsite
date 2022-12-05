@@ -5,10 +5,12 @@
     </p>
     <!-- * the below method is an alternate way to for loop in javascript and is much shorter compared to for loop -->
     <%newPost.forEach(element=>{%>
-        <h2><%=element.articleTitle%></h2>
+        <h2>
+            <%=element.articleTitle%>
+        </h2>
         <p>
             <%=element.articleContent.substring(1,100)+" ..."%>
-            <a href="/posts/<%=element.title%>">Read more</a>
+                <a href="/posts/<%=element._id%>">Read more</a>
         </p>
         <%});%>
             <%-include("partials/footer");-%>
