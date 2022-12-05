@@ -1,6 +1,17 @@
+// !-------------database boilerplate---------------
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/blogPostDB");
+
+const articleSchema = {
+  articleTitle: { type: String, required: true },
+  articleContent: { type: String, required: true },
+};
+
+const Article = mongoose.model("Article", articleSchema);
+
+// !--------------express boilerplate----------------
 const express = require("express");
 const port = 3000;
-// const ejs = require("ejs");
 
 const homeStartingContent =
   "Lacus vel facilisis volutpat est velit egestas dui id ornare. Semper auctor neque vitae tempus quam. Sit amet cursus sit amet dictum sit amet justo. Viverra tellus in hac habitasse. Imperdiet proin fermentum leo vel orci porta. Donec ultrices tincidunt arcu non sodales neque sodales ut. Mattis molestie a iaculis at erat pellentesque adipiscing. Magnis dis parturient montes nascetur ridiculus mus mauris vitae ultricies. Adipiscing elit ut aliquam purus sit amet luctus venenatis lectus. Ultrices vitae auctor eu augue ut lectus arcu bibendum at. Odio euismod lacinia at quis risus sed vulputate odio ut. Cursus mattis molestie a iaculis at erat pellentesque adipiscing.";
@@ -13,17 +24,17 @@ const app = express();
 
 const _ = require("lodash");
 
-let posts = [];
-
 app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  res.render("home", {
-    summary: homeStartingContent,
-    newPost: posts,
+  Article.find((err, posts) => {
+    res.render("home", {
+      summary: homeStartingContent,
+      newPost: posts,
+    });
   });
 });
 
@@ -55,11 +66,11 @@ app.get("/posts/:newPost", (req, res) => {
 });
 
 app.post("/compose", (req, res) => {
-  const publishContent = {
-    title: req.body.title,
-    article: req.body.article,
-  };
-  posts.push(publishContent);
+  let title = req.body.title;
+  let article = req.body.article;
+
+  const newArticle = Article({ articleTitle: title, articleContent: article });
+  newArticle.save();
   res.redirect("/");
 });
 
