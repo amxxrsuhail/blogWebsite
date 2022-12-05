@@ -1,6 +1,6 @@
 // !-------------database boilerplate---------------
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/blogPostDB");
+mongoose.connect("mongodb+srv://ameersuhail:AMINAdavood41099@cluster1.e6mhuag.mongodb.net/blogPostDB");
 
 const articleSchema = {
   articleTitle: { type: String, required: true },
@@ -59,7 +59,7 @@ app.get("/compose", (req, res) => {
 app.get("/posts/:postId", (req, res) => {
   const requestedPostId = req.params.postId;
 
-  Article.findOne({ articleTitle: requestedPostId }, (err, post) => {
+  Article.findOne({ _id: requestedPostId }, (err, post) => {
     res.render("post", {
       individualTitle: post.articleTitle,
       individualSummary: post.articleContent,

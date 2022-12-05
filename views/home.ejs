@@ -9,7 +9,7 @@
             <%=element.articleTitle%>
         </h2>
         <p>
-            <%=element.articleContent.substring(1,100)+" ..."%>
+            <%=element.articleContent.substring(0,100)+" ..."%>
                 <a href="/posts/<%=element._id%>">Read more</a>
         </p>
         <%});%>
